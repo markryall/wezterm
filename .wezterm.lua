@@ -55,26 +55,29 @@ wezterm.on("open-uri", function(window, pane, uri)
 		-- environment and capture it.
 		local action = wezterm.action({
 			SpawnCommandInNewWindow = {
-				args = { "/opt/homebrew/bin/emacsclient", "-n", name },
+				-- args = { "/opt/homebrew/bin/emacsclient", "-n", name },
+				-- args = { "/Users/mark/.asdf/shims/nvr", name },
+				args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-tab-silent", name },
 			},
 		})
 
-		local start = name:find(":")
-		if start then
-			local number = name:sub(start + 1)
-			local start_other = number:find(":")
-			if start_other then
-				number = number:sub(1, start_other)
-			end
-
-			local line = "+" .. number
-			name = name:sub(1, start - 1)
-			action = wezterm.action({
-				SpawnCommandInNewWindow = {
-					args = { "/opt/homebrew/bin/emacsclient", "-n", line, name },
-				},
-			})
-		end
+		-- local start = name:find(":")
+		-- if start then
+		-- 	local number = name:sub(start + 1)
+		-- 	local start_other = number:find(":")
+		-- 	if start_other then
+		-- 		number = number:sub(1, start_other)
+		-- 	end
+		--
+		-- 	local line = "+" .. number
+		-- 	name = name:sub(1, start - 1)
+		-- 	action = wezterm.action({
+		-- 		SpawnCommandInNewWindow = {
+		-- 			-- args = { "/opt/homebrew/bin/emacsclient", "-n", line, name },
+		-- 			args = { "/Users/mark/.asdf/shims/nvr", name },
+		-- 		},
+		-- 	})
+		-- end
 
 		-- To open a new window:
 
@@ -102,7 +105,7 @@ config.hyperlink_rules = {
 		format = "$0",
 	},
 	{
-		regex = "\\b\\S*\\b",
+		regex = "\\S*",
 		format = "$EDITOR:$0",
 	},
 }
