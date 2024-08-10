@@ -53,33 +53,27 @@ wezterm.on("open-uri", function(window, pane, uri)
 		-- you will need to restart wezterm for this to take effect,
 		-- as there isn't a way for wezterm to "see into" your shell
 		-- environment and capture it.
-		local action = wezterm.action({
-			SpawnCommandInNewWindow = {
-				-- args = { "/opt/homebrew/bin/emacsclient", "-n", name },
-				-- args = { "/Users/mark/.asdf/shims/nvr", name },
-				args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-tab-silent", name },
-			},
-		})
+		local command = "<Esc>:e " .. name .. "<CR>"
 
-		-- local start = name:find(":")
-		-- if start then
-		-- 	local number = name:sub(start + 1)
-		-- 	local start_other = number:find(":")
-		-- 	if start_other then
-		-- 		number = number:sub(1, start_other)
-		-- 	end
-		--
-		-- 	local line = "+" .. number
-		-- 	name = name:sub(1, start - 1)
-		-- 	action = wezterm.action({
-		-- 		SpawnCommandInNewWindow = {
-		-- 			-- args = { "/opt/homebrew/bin/emacsclient", "-n", line, name },
-		-- 			args = { "/Users/mark/.asdf/shims/nvr", name },
-		-- 		},
-		-- 	})
-		-- end
+		local colon_first = name:find(":")
+		if colon_first then
+			local number = name:sub(colon_first + 1)
+			name = name:sub(1, colon_first - 1)
+
+			local colon_second = number:find(":")
+			if colon_second then
+				number = number:sub(1, colon_second)
+			end
+
+			command = "<Esc>:e " .. name .. "<CR>" .. number .. "gg"
+		end
 
 		-- To open a new window:
+		local action = wezterm.action({
+			SpawnCommandInNewWindow = {
+				args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-send", command },
+			},
+		})
 
 		-- To open in a pane instead
 		-- local action = wezterm.action({ SplitHorizontal = {
