@@ -54,7 +54,7 @@ wezterm.on("open-uri", function(window, pane, uri)
 		-- as there isn't a way for wezterm to "see into" your shell
 		-- environment and capture it.
 		-- local args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-send", "<Esc>:e " .. name .. "<CR>" }
-    local args = { "/opt/homebrew/bin/emacsclient", "-n", name },
+		local args = { "/opt/homebrew/bin/emacsclient", "-n", name }
 
 		local colon_first = name:find(":")
 		if colon_first then
@@ -66,14 +66,14 @@ wezterm.on("open-uri", function(window, pane, uri)
 				number = number:sub(1, colon_second)
 			end
 
-      -- args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-send", "<Esc>:e " .. name .. "<CR>" .. number .. "gg" }
-      args = { "/opt/homebrew/bin/emacsclient", "-n", "+" .. number, name },
+			-- args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-send", "<Esc>:e " .. name .. "<CR>" .. number .. "gg" }
+			args = { "/opt/homebrew/bin/emacsclient", "-n", "+" .. number, name }
 		end
 
 		-- To open a new window:
 		local action = wezterm.action({
-        SpawnCommandInNewWindow = {
-          args = args,
+			SpawnCommandInNewWindow = {
+				args = args,
 			},
 		})
 
