@@ -55,7 +55,8 @@ wezterm.on("open-uri", function(window, pane, uri)
 		-- environment and capture it.
 		-- local args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-send", "<Esc>:e " .. name .. "<CR>" }
 		-- local args = { "/opt/homebrew/bin/emacsclient", "-n", name }
-		local args = { "/usr/local/bin/cursor", "--goto", name }
+		-- local args = { "/usr/local/bin/cursor", "--goto", name }
+		local args = { "/Users/mark/launch_editor", name }
 
 		local colon_first = name:find(":")
 		if colon_first then
@@ -75,7 +76,8 @@ wezterm.on("open-uri", function(window, pane, uri)
 			-- 	"<Esc>:e " .. name .. "<CR>" .. number .. "gg",
 			-- }
 			--args = { "/opt/homebrew/bin/emacsclient", "-n", "+" .. number, name }
-			args = { "/usr/local/bin/cursor", "--goto", name .. ":" .. number }
+			-- args = { "/usr/local/bin/cursor", "--goto", name .. ":" .. number }
+			args = { "/Users/mark/launch_editor", name, number }
 		end
 
 		-- To open a new window:

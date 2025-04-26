@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+
+file=$1
+line=$2
+
+zshlog "launch_editor file=${file},line=${line}"
+
+if [[ -z "${line}" ]]; then
+  /opt/homebrew/bin/emacsclient -n ${file}
+else
+  /opt/homebrew/bin/emacsclient -n +${line} ${file}
+fi
+
+# if [[ -z "${line}" ]]; then
+# 	/opt/homebrew/bin/nvim --server tmp/nvim.pipe --remote-send "<Esc>:e ${file}<CR>"
+# else
+# 	/opt/homebrew/bin/nvim --server tmp/nvim.pipe --remote-send "<Esc>:e ${file}<CR>${line}gg"
+# fi
+
+# if [[ -z "${line}" ]]; then
+# 	/usr/local/bin/cursor --goto "${file}"
+# else
+# 	/usr/local/bin/cursor --goto "${file}:${line}"
+# fi
+
+# if [[ -z "${line}" ]]; then
+# 	/usr/local/bin/zed "${file}"
+# else
+# 	/usr/local/bin/zed "${file}:${line}"
+# fi
