@@ -48,15 +48,10 @@ local config = wezterm.config_builder()
 
 wezterm.on("open-uri", function(window, pane, uri)
 	local name = extract_filename(uri)
+	local home = os.getenv("HOME")
+
 	if name and editable(name) then
-		-- Note: if you change your VISUAL or EDITOR environment,
-		-- you will need to restart wezterm for this to take effect,
-		-- as there isn't a way for wezterm to "see into" your shell
-		-- environment and capture it.
-		-- local args = { "/opt/homebrew/bin/nvim", "--server", "tmp/nvim.pipe", "--remote-send", "<Esc>:e " .. name .. "<CR>" }
-		-- local args = { "/opt/homebrew/bin/emacsclient", "-n", name }
-		-- local args = { "/usr/local/bin/cursor", "--goto", name }
-		local args = { "/Users/mark/launch_editor", name }
+		local args = { "/Users/markryall/launch_editor", name }
 
 		local colon_first = name:find(":")
 		if colon_first then
@@ -68,16 +63,7 @@ wezterm.on("open-uri", function(window, pane, uri)
 				number = number:sub(1, colon_second)
 			end
 
-			-- args = {
-			-- 	"/opt/homebrew/bin/nvim",
-			-- 	"--server",
-			-- 	"tmp/nvim.pipe",
-			-- 	"--remote-send",
-			-- 	"<Esc>:e " .. name .. "<CR>" .. number .. "gg",
-			-- }
-			--args = { "/opt/homebrew/bin/emacsclient", "-n", "+" .. number, name }
-			-- args = { "/usr/local/bin/cursor", "--goto", name .. ":" .. number }
-			args = { "/Users/mark/launch_editor", name, number }
+			args = { "/Users/markryall/launch_editor", name, number }
 		end
 
 		-- To open a new window:
@@ -114,6 +100,10 @@ config.hyperlink_rules = {
 		regex = "\\S*",
 		format = "$EDITOR:$0",
 	},
+}
+
+config.keys = {
+  {key="Enter", mods="SHIFT", action=wezterm.action{SendString="\x1b\r"}},
 }
 
 return config
